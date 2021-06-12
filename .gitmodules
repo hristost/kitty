@@ -1,0 +1,3 @@
+[submodule "logo/alternative_icon"]
+	path = logo/alternative_icon
+	url = https://github.com/hristost/kitty-alternative-icon.git

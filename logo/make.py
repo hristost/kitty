@@ -7,8 +7,8 @@ import subprocess
 import shutil
 
 base = os.path.dirname(os.path.abspath(__file__))
-unframed_src = os.path.join(base, 'kitty.svg')
-framed_src = os.path.join(base, 'kitty-framed.svg')
+unframed_src = os.path.join(base, 'alternative_icon/kitty_icon.png')
+framed_src = os.path.join(base, 'alternative_icon/kitty_icon.png')
 
 
 def abspath(x):
@@ -24,11 +24,13 @@ def run(*args):
 
 def render(output, sz=256, src=unframed_src):
     print(f'Rendering {os.path.basename(src)} at {sz}x{sz}...')
-    run('rsvg-convert', '-w', str(sz), '-h', str(sz), '-o', output, src)
+    run('convert', src, '-resize', f'{sz}x{sz}', output)
     run('optipng', '-quiet', '-o7', '-strip', 'all', output)
 
 
 def main():
+    run('git', 'submodule', 'init')
+    run('git', 'submodule', 'update')
     render(abspath('kitty.png'))
     render(abspath('kitty-128.png'), sz=128)
     iconset = abspath('kitty.iconset')
